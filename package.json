@@ -1,0 +1,12 @@
+{
+    "name": "nail2",
+    "version": "0.0.1",
+    "dependencies": {
+        "body-parser": "^1.8.1",
+        "express": "^4.9.0",
+        "mysql": "^2.17.1"
+    },
+    "scripts": {
+        "start": "node server/server.js"
+    }
+}
