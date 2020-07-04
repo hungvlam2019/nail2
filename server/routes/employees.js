@@ -7,8 +7,8 @@ module.exports = function(app) {
         var lastName = req.body.lastName;
         var nickName = req.body.nickName || firstName;
         var phoneNumber = req.body.phoneNumber;
-        var checkRate = req.body.checkRate;
-        var payRate = req.body.payRate;
+        var checkRate = req.body.checkRate | 0.6;
+        var payRate = req.body.payRate | 0.6;
         console.log("Insert employee: " + firstName + " " + lastName + " (" + nickName + ") " + phoneNumber + " " + checkRate + "," + payRate);
     
         //TODO : handle error case in res.send(result)
@@ -55,6 +55,7 @@ module.exports = function(app) {
         employee.get(employeeId, function(result) {
             //console.log('Employees: ' + JSON.stringify(result));
             res.send(result);
+            console.log('get: ' + JSON.stringify(result));
         });
     });
 

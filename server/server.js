@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-//const Employee = require('./db/employee.js');
 const path = require('path');
+const fs = require('fs');
 
 //TODO : use app.router
 const app = express();
@@ -14,18 +14,34 @@ app.use('/css', express.static(path.join(__dirname, 'css')));
 
 const employees = require('./routes/employees')(app);
 
-/* REST uri */
-const URI_GET_EMPLOYEES = '/employees';
-
-/* routing uri */
-const URI_DEFAULT = '/';
-const URI_SHOW_EMPLOYEES = '/showEmployees';
-const URI_ADD_EMPLOYEE = '/showAddEmployee';
-
 
 const port = 8000;
 app.listen(port, function() {
     console.log("Server is successfully started on PORT: " + port);
+});
+
+app.get(['/', '/showEmployees'], function(req, res) {
+    console.log('get showEmployees');
+    res.sendFile('pages/showEmployees.html', {root: __dirname});
+});
+
+app.get('/addEmployee', function(req, res) {
+    res.sendFile('pages/addEmployee.html', {root: __dirname});
+});
+
+app.get('/updateEmployee/:id', function(req,res) {
+    var employeeId = parseInt(req.params.id);
+    console.log('update employee id: ' + employeeId);
+    var filePath = path.join(__dirname, 'pages/updateEmployee.html');
+    fs.readFile(filePath, function(err, data) {
+        if (err) {
+            throw err;
+        }
+
+        var content = data.toString();
+        content = content.replace(/{{EMPLOYEE_ID}}/g, employeeId);
+        res.send(content);
+    });
 });
 
 

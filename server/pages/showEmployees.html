@@ -18,18 +18,13 @@
             console.log('getAllEmployees');
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState === 4 && this.status === 200) {
                     //document.getElementById("Employees_Data").innerHTML = xhttp.responseText;
                     var tableContentBuffer = '';
                     //console.log('Result: ' + xhttp.responseText);
                     var employees = JSON.parse(xhttp.responseText);
                     //console.log(JSON.stringify(employees));
                     var table = document.getElementById('employeeTable');
-                    /*
-                    var numRows = table.rows.length;
-                    for (var curRow = 1; curRow < numRows; curRow++) {
-                        table.deleteRow(curRow);
-                    }*/
 
                     var rowIndex = 1;
                     employees.forEach(employee => {       
@@ -56,7 +51,11 @@
         };
 
         function addEmployee() {
-            window.location.href = '/showAddEmployee';
+            window.location.href = '/addEmployee';
+        }
+
+        function updateEmployee(employeeId) {
+            window.location.href = '/updateEmployee/' + employeeId;
         }
 
         function deleteEmployee(employeeId) {
@@ -67,17 +66,14 @@
                     window.location.reload(false);
                 }
             };
-            xhttp.open('DELETE', '/employees', true);
+            xhttp.open('DELETE', '/employees/'+employeeId, true);
             xhttp.setRequestHeader('Content-Type', 'application/json');
-            const data = {
-                "employeeId" : employeeId
-            };
-            xhttp.send(JSON.stringify(data));
+            xhttp.send(null);
         }
 
         function getActionHtml(employeeId) {
-            return '<button name="Delete" onclick="deleteEmployee(' + employeeId + ')">Delete ' + employeeId + '</button>' +
-                   '<button anme="Update" value="Update" onclick="updateEmployee()">Update</button>';
+            return '<button name="Delete" onclick="deleteEmployee(' + employeeId + ')">Delete</button>' +
+                   '<button anme="Update" onclick="updateEmployee('+ employeeId + ')">Update</button>';
         }
 
     </script>
