@@ -1,80 +1,117 @@
 <html>
-    <head>
-        <script src="/scripts/fieldFormat.js"></script>
-    </head>
-    <body onload="getAllEmployees()">
-        <h2>Employees</h2>
-        <div id="Employees_Table">
-            <table id="employeeTable" border="1">
-                <tr><th>Index</th></th><th>Name</th><th>Phone</th><th>Pay Rate</th><th>Check Rate</th><th>Options</th></tr>
+
+<head>
+    <script src="/scripts/fieldFormat.js"></script>
+    <script src="/scripts/util.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
+</head>
+
+<body onload="init()">
+
+        <header id="header">
+            <h2 class="logo">Serenity Nail Spa</h2>
+            <p>
+            <div>Employees</div>
+            <div id="currentDate" class="header-right"></div>
+            </p>
+        </header>
+
+        <div id="main">
+            <table id="employeeTable" >
+                <tr>
+                    <th>Index</th>
+                    </th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Pay Rate</th>
+                    <th>Check Rate</th>
+                    <th>Options</th>
+                </tr>
             </table>
         </div>
 
-        <button id="addEmployee" onclick="addEmployee()">Add Employee</button>
-    </body>
+        <footer id="footer">
+            <button id="home" onclick="goHome()">Home</button>
+            <button id="addEmployee" onclick="addEmployee()">Add Employee</button>
+        </footer>
+    
 
-    <script>
-        function getAllEmployees() {
-            console.log('getAllEmployees');
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState === 4 && this.status === 200) {
-                    //document.getElementById("Employees_Data").innerHTML = xhttp.responseText;
-                    var tableContentBuffer = '';
-                    //console.log('Result: ' + xhttp.responseText);
-                    var employees = JSON.parse(xhttp.responseText);
-                    //console.log(JSON.stringify(employees));
-                    var table = document.getElementById('employeeTable');
+</body>
 
-                    var rowIndex = 1;
-                    employees.forEach(employee => {       
-                        var row = table.insertRow(rowIndex++);
-                        var col1 = row.insertCell(0);
-                        col1.innerHTML = employee.id;
-                        var col2 = row.insertCell(1);
-                        col2.innerHTML = fullName2Label(employee.firstName, employee.lastName);
-                        var col3 = row.insertCell(2);
-                        col3.innerHTML = phone2Label(employee.phoneNumber);
-                        var col4 = row.insertCell(3);
-                        col4.innerHTML = employee.payRate;
-                        var col5 = row.insertCell(4);
-                        col5.innerHTML = employee.checkRate;
-                        var col6 = row.insertCell(5);
-                        col6.innerHTML = getActionHtml(employee.id);
-                    });
-                    console.log(table);
-                }
-            };
-            xhttp.open('GET', '/employees', true);
-            xhttp.setRequestHeader('Content-Type', 'application/json');
-            xhttp.send();
+<script>
+    function init() {
+        setCurrentDate();
+        getAllEmployees();
+    }
+
+    function setCurrentDate() {
+        document.getElementById('currentDate').innerHTML = currentDate();
+    }
+
+    function getAllEmployees() {
+        console.log('getAllEmployees');
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                //document.getElementById("Employees_Data").innerHTML = xhttp.responseText;
+                var tableContentBuffer = '';
+                //console.log('Result: ' + xhttp.responseText);
+                var employees = JSON.parse(xhttp.responseText);
+                //console.log(JSON.stringify(employees));
+                var table = document.getElementById('employeeTable');
+
+                var rowIndex = 1;
+                employees.forEach(employee => {
+                    var row = table.insertRow(rowIndex++);
+                    var col1 = row.insertCell(0);
+                    col1.innerHTML = employee.id;
+                    var col2 = row.insertCell(1);
+                    col2.innerHTML = fullName2Label(employee.firstName, employee.lastName);
+                    var col3 = row.insertCell(2);
+                    col3.innerHTML = phone2Label(employee.phoneNumber);
+                    var col4 = row.insertCell(3);
+                    col4.innerHTML = employee.payRate;
+                    var col5 = row.insertCell(4);
+                    col5.innerHTML = employee.checkRate;
+                    var col6 = row.insertCell(5);
+                    col6.innerHTML = getActionHtml(employee.id);
+                });
+                console.log(table);
+            }
         };
+        xhttp.open('GET', '/employees', true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send();
+    };
 
-        function addEmployee() {
-            window.location.href = '/addEmployee';
-        }
+    function addEmployee() {
+        window.location.href = '/addEmployee';
+    }
 
-        function updateEmployee(employeeId) {
-            window.location.href = '/updateEmployee/' + employeeId;
-        }
+    function updateEmployee(employeeId) {
+        window.location.href = '/updateEmployee/' + employeeId;
+    }
 
-        function deleteEmployee(employeeId) {
-            alert('Delete Employee with ID: ' + employeeId);
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    window.location.reload(false);
-                }
-            };
-            xhttp.open('DELETE', '/employees/'+employeeId, true);
-            xhttp.setRequestHeader('Content-Type', 'application/json');
-            xhttp.send(null);
-        }
+    function deleteEmployee(employeeId) {
+        alert('Delete Employee with ID: ' + employeeId);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                window.location.reload(false);
+            }
+        };
+        xhttp.open('DELETE', '/employees/' + employeeId, true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(null);
+    }
 
-        function getActionHtml(employeeId) {
-            return '<button name="Delete" onclick="deleteEmployee(' + employeeId + ')">Delete</button>' +
-                   '<button anme="Update" onclick="updateEmployee('+ employeeId + ')">Update</button>';
-        }
+    function getActionHtml(employeeId) {
+        return '<button name="Delete" onclick="deleteEmployee(' + employeeId + ')">Delete</button>' +
+            '<button anme="Update" onclick="updateEmployee(' + employeeId + ')">Update</button>';
+    }
 
-    </script>
+</script>
+
 </html>

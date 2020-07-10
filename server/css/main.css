@@ -1,0 +1,36 @@
+body {
+   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+   background-color: #A9E2F3;
+}
+
+div {
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#main {
+  height: 80px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+  border: 1px solid #0B2F3A;
+  padding: 10px;
+}
+
+tr:nth-child(even){background-color: #EFF8FB;}
+
+tr:hover {background-color: #82FA58;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #086A87;
+  color: white;
+}
