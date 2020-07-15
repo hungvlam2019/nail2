@@ -1,16 +1,77 @@
 <html>
+    <header>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/header.css">
+        <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    </header>
     <body onload="loadEmployee()">
-            <h2>Update Employee <span id="updateEmployeeName_title"></span></h2>
-            <table>
-                <tr><td><label for="firstName">First name:</label></td><td><input type="text" id="firstName" name="firstName"></td></tr>
-                <tr><td><label for="lastName">Last name:</label></td><td><input type="text" id="lastName" name="lastName"></td></tr>
-                <tr><td><label for="nickName">Nick name:</label></td><td><input type="text" id="nickName" name="nickName"></td></tr>
-                <tr><td><label for="phoneNumber">Phone number:</label></td><td><input type="text" id="phoneNumber" name="phoneNumber"></td></tr>
-                <tr><td><label for="payRate">Pay rate:</label></td><td><input type="text" id="payRate" name="payRate"></td></tr>
-                <tr><td><label for="checkRate">Check rate:</label></td><td><input type="text" id="checkRate" name="checkRate"></td></tr>
-            </table>
-            <button id="Update" onclick="updateEmployee()">Update</button>
-            <button id="Show Employees" onclick="showEmployees()">Show Employees</button>
+        <h2>Update Employee <span id="updateEmployeeName_title"></span></h2>
+        <div id="container">
+            <header>
+                <h2 class="logo">Serenity Nail Spa</h2>
+                <p>
+                <div>Employees</div>
+                <div id="currentDate" class="header-right"></div>
+                </p>
+            </header>
+    
+            <div id="main">
+                <div class="row">
+                    <div class="column">
+                        <div class="verticalSpace">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" id="firstName">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" id="lastName">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="nickName">Nick Name:</label>
+                            <input type="text" id="nickName">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="text" id="phoneNumber">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="payRate">Pay Rate:</label>
+                            <input type="text" id="payRate">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="firstName">Check Rate:</label>
+                            <input type="text" id="checkRate">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="verticalSpace">
+                            <label for="streetAddress">Street Address</label>
+                            <input type="text" id="streetAddress">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="city">City</label>
+                            <input type="text" id="city">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="state">State</label>
+                            <input type="text" id="state" value="NC">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="zipcode">Zip Code</label>
+                            <input type="text" id="zipcode">
+                        </div>
+                        <div class="verticalSpace">
+                            <label for="active">Active</label>
+                            <input type="checkbox" id="active" class="checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <button id="Add" onclick="updateEmployee()">Update</button>
+                <button id="home" onclick="showEmployees()">Cancel</button>
+            </footer>
+        </div>
 
         <script>
             function loadEmployee() {

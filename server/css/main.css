@@ -1,16 +1,16 @@
 body {
    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-   background-color: #A9E2F3;
+   background-color: white;
+   padding: 0px;
 }
 
-div {
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+div#container {
+  position: relative;
+  padding: 20px;
 }
 
-#main {
-  height: 80px;
+div#main {
+  margin:130px 10px 130px 10px;
 }
 
 table {
@@ -33,4 +33,58 @@ th {
   text-align: left;
   background-color: #086A87;
   color: white;
+}
+
+button {
+  background-color: grey;
+  border: none;
+  color: black;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 10px;
+  border-radius: 12px;
+}
+
+label {
+  display: block;
+  font-size: 24px;
+}
+
+input {
+  display: block;
+  font-size: 24px;
+}
+
+input.checkbox {
+   width: 20px;
+   height: 20px;
+}
+
+/*
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+*/
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.verticalSpace {
+  padding-bottom: 20px;
 }
