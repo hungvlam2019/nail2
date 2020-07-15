@@ -23,6 +23,10 @@ td, th {
   padding: 10px;
 }
 
+tr {
+  line-height: 30px;
+}
+
 tr:nth-child(even){background-color: #EFF8FB;}
 
 tr:hover {background-color: #82FA58;}

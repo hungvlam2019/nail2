@@ -27,7 +27,6 @@
                     <th>Phone</th>
                     <th>Pay Rate</th>
                     <th>Check Rate</th>
-                    <th>Options</th>
                 </tr>
             </table>
         </div>
@@ -35,12 +34,16 @@
         <footer>
             <button id="home" onclick="goHome()">Home</button>
             <button id="addEmployee" onclick="addEmployee()">Add Employee</button>
+            <button id="updateEmployee" onclick="updateEmployee()">Update Employee</button>
+            <button id="deleteEmployee" onclick="deleteEmployee()">Delete Employee</button>
         </footer>
     </div>
 
 </body>
 
 <script>
+    var selectedEmployee = -1;
+
     function init() {
         setCurrentDate();
         getAllEmployees();
@@ -61,10 +64,10 @@
                 var employees = JSON.parse(xhttp.responseText);
                 //console.log(JSON.stringify(employees));
                 var table = document.getElementById('employeeTable');
-
                 var rowIndex = 1;
                 employees.forEach(employee => {
                     var row = table.insertRow(rowIndex++);
+                    row.onclick = () => {selectedEmployee = row.cells[0].innerHTML};
                     var col1 = row.insertCell(0);
                     col1.innerHTML = employee.id;
                     var col2 = row.insertCell(1);
@@ -75,8 +78,6 @@
                     col4.innerHTML = employee.payRate;
                     var col5 = row.insertCell(4);
                     col5.innerHTML = employee.checkRate;
-                    var col6 = row.insertCell(5);
-                    col6.innerHTML = getActionHtml(employee.id);
                 });
                 console.log(table);
             }
@@ -90,11 +91,12 @@
         window.location.href = '/addEmployee';
     }
 
-    function updateEmployee(employeeId) {
-        window.location.href = '/updateEmployee/' + employeeId;
-    }
-
-    function deleteEmployee(employeeId) {
+    function deleteEmployee() {
+        if (selectedEmployee === -1) {
+            alert('You need to select an employee to update');
+            return;
+        }
+        var employeeId = selectedEmployee;
         alert('Delete Employee with ID: ' + employeeId);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -107,9 +109,12 @@
         xhttp.send(null);
     }
 
-    function getActionHtml(employeeId) {
-        return '<button name="Delete" onclick="deleteEmployee(' + employeeId + ')">Delete</button>' +
-            '<button anme="Update" onclick="updateEmployee(' + employeeId + ')">Update</button>';
+    function updateEmployee() {
+        if (selectedEmployee === -1) {
+            alert('You need to select an employee to update');
+            return;
+        }
+        window.location.href = '/updateEmployee/' + selectedEmployee;
     }
 
 </script>
