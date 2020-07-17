@@ -19,7 +19,7 @@
         </header>
 
         <div id="main">
-            <table id="employeeTable" >
+            <table id="employeeTable">
                 <tr>
                     <th>Index</th>
                     </th>
@@ -67,7 +67,7 @@
                 var rowIndex = 1;
                 employees.forEach(employee => {
                     var row = table.insertRow(rowIndex++);
-                    row.onclick = () => {selectedEmployee = row.cells[0].innerHTML};
+                    row.onclick = () => { selectedEmployee = row.cells[0].innerHTML };
                     var col1 = row.insertCell(0);
                     col1.innerHTML = employee.id;
                     var col2 = row.insertCell(1);

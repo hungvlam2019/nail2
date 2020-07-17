@@ -1,16 +1,17 @@
 <html>
 <header>
+    <script src="/scripts/util.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
 </header>
 
-<body>
+<body onload="init()">
     <div id="container">
         <header>
             <h2 class="logo">Serenity Nail Spa</h2>
             <p>
-            <div>Employees</div>
+            <div>Add New Employee</div>
             <div id="currentDate" class="header-right"></div>
             </p>
         </header>
@@ -36,11 +37,25 @@
                     </div>
                     <div class="verticalSpace">
                         <label for="payRate">Pay Rate:</label>
-                        <input type="text" id="payRate">
+                        <select id="payRate">
+                            <option value="0.5">5/5</option>
+                            <option value="0.6" selected>6/4</option>
+                            <option value="0.7">7/3</option>
+                            <option value="0.8">8/2</option>
+                            <option value="0.9">9/1</option>
+                            <option value="1">100%</option>
+                        </select>
                     </div>
                     <div class="verticalSpace">
-                        <label for="firstName">Check Rate:</label>
-                        <input type="text" id="checkRate">
+                        <label for="checkRate">Check Rate:</label>
+                        <select id="checkRate">
+                            <option value="0.5">5/5</option>
+                            <option value="0.6" selected>6/4</option>
+                            <option value="0.7">7/3</option>
+                            <option value="0.8">8/2</option>
+                            <option value="0.9">9/1</option>
+                            <option value="1">100%</option>
+                        </select>
                     </div>
                 </div>
                 <div class="column">
@@ -74,6 +89,10 @@
     </div>
 
     <script>
+        function init() {
+            document.getElementById('currentDate').innerHTML = currentDate();
+        }
+
         function addEmployee() {
             var firstName = document.getElementById('firstName').value;
             var lastName = document.getElementById('lastName').value;
@@ -89,7 +108,6 @@
                 "payRate": payRate,
                 "checkRate": checkRate
             };
-            alert('data: ' + JSON.stringify(data));
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (xhttp.readyState == XMLHttpRequest.DONE) {
