@@ -7,8 +7,8 @@ module.exports = function(app) {
         var lastName = req.body.lastName;
         var nickName = req.body.nickName || firstName;
         var phoneNumber = req.body.phoneNumber;
-        var checkRate = req.body.checkRate | 0.6;
-        var payRate = req.body.payRate | 0.6;
+        var checkRate = req.body.checkRate || 0.6;
+        var payRate = req.body.payRate || 0.6;
         console.log("Insert employee: " + firstName + " " + lastName + " (" + nickName + ") " + phoneNumber + " " + checkRate + "," + payRate);
     
         //TODO : handle error case in res.send(result)
