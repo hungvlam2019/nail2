@@ -36,11 +36,25 @@
                         </div>
                         <div class="verticalSpace">
                             <label for="payRate">Pay Rate:</label>
-                            <input type="text" id="payRate">
+                            <select id="payRate">
+                                <option value=0.5>5/5</option>
+                                <option value=0.6>6/4</option>
+                                <option value=0.7>7/3</option>
+                                <option value=0.8>8/2</option>
+                                <option value=0.9>9/1</option>
+                                <option value=1>100%</option>
+                            </select>
                         </div>
                         <div class="verticalSpace">
-                            <label for="firstName">Check Rate:</label>
-                            <input type="text" id="checkRate">
+                            <label for="checkRate">Check Rate:</label>
+                            <select id="checkRate">
+                                <option value="0.5">5/5</option>
+                                <option value="0.6">6/4</option>
+                                <option value="0.7">7/3</option>
+                                <option value="0.8">8/2</option>
+                                <option value="0.9">9/1</option>
+                                <option value="1">100%</option>
+                            </select>
                         </div>
                     </div>
                     <div class="column">
@@ -81,17 +95,30 @@
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                         var employeeInfo = JSON.parse(xhr.responseText);
+                        console.log(employeeInfo);
                         console.log('data: ' + JSON.stringify(employeeInfo));
                         document.getElementById('firstName').value = employeeInfo.firstName;
                         document.getElementById('lastName').value = employeeInfo.lastName;
                         document.getElementById('nickName').value = employeeInfo.nickName;
                         document.getElementById('phoneNumber').value = employeeInfo.phoneNumber;
-                        document.getElementById('payRate').value = employeeInfo.payRate;
-                        document.getElementById('checkRate').value = employeeInfo.checkRate;
+                        selectOption('payRate', employeeInfo.payRate);
+                        selectOption('checkRate', employeeInfo.checkRate);
                         document.getElementById('active').checked = !!employeeInfo.active;
                     }
                 };
                 xhr.send(null);
+            }
+
+            function selectOption(selectId, optionValue) {
+                var selectDropdown = document.querySelector('#' + selectId);
+                var options = selectDropdown.options;
+                for (var i=0; i<options.length; i++) {
+                    var option = options[i];
+                    if (Number(option.value) === optionValue) {
+                        option.selected = true;
+                        break;
+                    }
+                }
             }
 
             function showEmployees() {
