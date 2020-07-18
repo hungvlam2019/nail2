@@ -50,7 +50,7 @@ module.exports = {
     },
 
     getAll: function (callback) {
-        var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee';
+        var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee ORDER BY nickName ASC';
         connection.query(sql, function (err, result) {
             if (!err) {
                 callback(result);
