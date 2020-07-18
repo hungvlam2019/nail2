@@ -54,6 +54,14 @@
         document.getElementById('currentDate').innerHTML = currentDate();
     }
 
+    function findEmployee(employeeId) {
+        for (employee of employees) {
+            if (employee.id === employeeId) {
+                return employee;
+            }
+        }
+    }
+
     function getAllEmployees() {
         console.log('getAllEmployees');
         var xhttp = new XMLHttpRequest();
@@ -68,7 +76,7 @@
                 var rowIndex = 1;
                 employees.forEach(employee => {
                     var row = table.insertRow(rowIndex++);
-                    row.onclick = () => { selectedEmployee = row.cells[0].innerHTML };
+                    row.onclick = () => { selectedEmployee = Number(row.cells[0].innerHTML) };
                     var col1 = row.insertCell(0);
                     col1.innerHTML = employee.id;
                     col1.style.display = 'none';
@@ -98,11 +106,15 @@
 
     function deleteEmployee() {
         if (selectedEmployee === -1) {
-            alert('You need to select an employee to update');
+            alert('You need to select an employee to delete');
             return;
         }
         var employeeId = selectedEmployee;
-        alert('Delete Employee with ID: ' + employeeId);
+        var employee = findEmployee(employeeId);
+        var rc = confirm('Do you want to delete: ' + employee.firstName + ' ' + employee.lastName);
+        if (!rc) {
+            return;
+        }
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
