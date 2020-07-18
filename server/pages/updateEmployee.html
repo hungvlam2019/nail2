@@ -1,160 +1,178 @@
 <html>
-    <header>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-        <link rel="stylesheet" type="text/css" href="/css/header.css">
-        <link rel="stylesheet" type="text/css" href="/css/footer.css">
-    </header>
-    <body onload="loadEmployee()">
-        <h2>Update Employee <span id="updateEmployeeName_title"></span></h2>
-        <div id="container">
-            <header>
-                <h2 class="logo">Serenity Nail Spa</h2>
-                <p>
-                <div>Employees</div>
-                <div id="currentDate" class="header-right"></div>
-                </p>
-            </header>
-    
-            <div id="main">
-                <div class="row">
-                    <div class="column">
-                        <div class="verticalSpace">
-                            <label for="firstName">First Name:</label>
-                            <input type="text" id="firstName">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="lastName">Last Name:</label>
-                            <input type="text" id="lastName">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="nickName">Nick Name:</label>
-                            <input type="text" id="nickName">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="phoneNumber">Phone Number:</label>
-                            <input type="text" id="phoneNumber">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="payRate">Pay Rate:</label>
-                            <select id="payRate">
-                                <option value=0.5>5/5</option>
-                                <option value=0.6>6/4</option>
-                                <option value=0.7>7/3</option>
-                                <option value=0.8>8/2</option>
-                                <option value=0.9>9/1</option>
-                                <option value=1>100%</option>
-                            </select>
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="checkRate">Check Rate:</label>
-                            <select id="checkRate">
-                                <option value="0.5">5/5</option>
-                                <option value="0.6">6/4</option>
-                                <option value="0.7">7/3</option>
-                                <option value="0.8">8/2</option>
-                                <option value="0.9">9/1</option>
-                                <option value="1">100%</option>
-                            </select>
-                        </div>
+<header>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+</header>
+
+<body onload="loadEmployee()">
+    <h2>Update Employee <span id="updateEmployeeName_title"></span></h2>
+    <div id="container">
+        <header>
+            <h2 class="logo">Serenity Nail Spa</h2>
+            <p>
+            <div>Employees</div>
+            <div id="currentDate" class="header-right"></div>
+            </p>
+        </header>
+
+        <div id="main">
+            <div class="row">
+                <div class="column">
+                    <div class="verticalSpace">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName">
                     </div>
-                    <div class="column">
-                        <div class="verticalSpace">
-                            <label for="streetAddress">Street Address</label>
-                            <input type="text" id="streetAddress">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="city">City</label>
-                            <input type="text" id="city">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="state">State</label>
-                            <input type="text" id="state" value="NC">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="zipcode">Zip Code</label>
-                            <input type="text" id="zipcode">
-                        </div>
-                        <div class="verticalSpace">
-                            <label for="active">Active</label>
-                            <input type="checkbox" id="active" class="checkbox">
-                        </div>
+                    <div class="verticalSpace">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="nickName">Nick Name:</label>
+                        <input type="text" id="nickName">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="payRate">Pay Rate:</label>
+                        <select id="payRate">
+                            <option value=0.5>5/5</option>
+                            <option value=0.6>6/4</option>
+                            <option value=0.7>7/3</option>
+                            <option value=0.8>8/2</option>
+                            <option value=0.9>9/1</option>
+                            <option value=1>100%</option>
+                        </select>
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="checkRate">Check Rate:</label>
+                        <select id="checkRate">
+                            <option value="0.5">5/5</option>
+                            <option value="0.6">6/4</option>
+                            <option value="0.7">7/3</option>
+                            <option value="0.8">8/2</option>
+                            <option value="0.9">9/1</option>
+                            <option value="1">100%</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="verticalSpace">
+                        <label for="streetAddress">Street Address</label>
+                        <input type="text" id="streetAddress">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="city">City</label>
+                        <input type="text" id="city">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="state">State</label>
+                        <input type="text" id="state" value="NC">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="zipcode">Zip Code</label>
+                        <input type="text" id="zipcode">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="active">Active</label>
+                        <input type="checkbox" id="active" class="checkbox">
                     </div>
                 </div>
             </div>
-            <footer>
-                <button id="Add" onclick="updateEmployee()">Update</button>
-                <button id="home" onclick="showEmployees()">Cancel</button>
-            </footer>
         </div>
+        <footer>
+            <button id="Add" onclick="updateEmployee()">Update</button>
+            <button id="home" onclick="showEmployees()">Cancel</button>
+        </footer>
+    </div>
 
-        <script>
-            function loadEmployee() {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', '/employees/{{EMPLOYEE_ID}}');
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                        var employeeInfo = JSON.parse(xhr.responseText);
-                        console.log(employeeInfo);
-                        console.log('data: ' + JSON.stringify(employeeInfo));
-                        document.getElementById('firstName').value = employeeInfo.firstName;
-                        document.getElementById('lastName').value = employeeInfo.lastName;
-                        document.getElementById('nickName').value = employeeInfo.nickName;
-                        document.getElementById('phoneNumber').value = employeeInfo.phoneNumber;
-                        selectOption('payRate', employeeInfo.payRate);
-                        selectOption('checkRate', employeeInfo.checkRate);
-                        document.getElementById('active').checked = !!employeeInfo.active;
-                    }
-                };
-                xhr.send(null);
-            }
+    <script>
+        function loadEmployee() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/employees/{{EMPLOYEE_ID}}');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    var employeeInfo = JSON.parse(xhr.responseText);
+                    console.log(employeeInfo);
+                    console.log('data: ' + JSON.stringify(employeeInfo));
+                    document.getElementById('firstName').value = employeeInfo.firstName;
+                    document.getElementById('lastName').value = employeeInfo.lastName;
+                    document.getElementById('nickName').value = employeeInfo.nickName;
+                    document.getElementById('phoneNumber').value = employeeInfo.phoneNumber;
+                    selectOption('payRate', employeeInfo.payRate);
+                    selectOption('checkRate', employeeInfo.checkRate);
+                    document.getElementById('active').checked = !!employeeInfo.active;
+                }
+            };
+            xhr.send(null);
+        }
 
-            function selectOption(selectId, optionValue) {
-                var selectDropdown = document.querySelector('#' + selectId);
-                var options = selectDropdown.options;
-                for (var i=0; i<options.length; i++) {
-                    var option = options[i];
-                    if (Number(option.value) === optionValue) {
-                        option.selected = true;
-                        break;
-                    }
+        function selectOption(selectId, optionValue) {
+            var selectDropdown = document.querySelector('#' + selectId);
+            var options = selectDropdown.options;
+            for (var i = 0; i < options.length; i++) {
+                var option = options[i];
+                if (Number(option.value) === optionValue) {
+                    option.selected = true;
+                    break;
                 }
             }
+        }
 
-            function showEmployees() {
-                window.location.href = "/showEmployees";
+        function validateInput4Error() {
+            var firstName = document.querySelector('#firstName').value;
+            var lastName = document.querySelector('#lastName').value;
+            if (!firstName) {
+                return 'You need to provide a first name';
+            } else if (!lastName) {
+                return 'You need to provide a last name';
             }
+            return null;
+        }
 
-            function updateEmployee() {                
-                var firstName = document.getElementById('firstName').value;
-                var lastName = document.getElementById('lastName').value;
-                var nickName = document.getElementById('nickName').value;
-                var phoneNumber = document.getElementById('phoneNumber').value;
-                var payRate = document.getElementById('payRate').value;
-                var checkRate = document.getElementById('checkRate').value;
-                var active = document.getElementById('active').checked ? 1 : 0;
-                const data = {
-                    "firstName": firstName,
-                    "lastName": lastName,
-                    "nickName": nickName,
-                    "phoneNumber": phoneNumber,
-                    "payRate": payRate,
-                    "checkRate": checkRate,
-                    "active": active
-                };
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                   if (xhttp.readyState == XMLHttpRequest.DONE) {
-                     if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
+        function showEmployees() {
+            window.location.href = "/showEmployees";
+        }
+
+        function updateEmployee() {
+            var error = validateInput4Error();
+            if (error) {
+                alert(error);
+                return;
+            }
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var nickName = document.getElementById('nickName').value;
+            var phoneNumber = document.getElementById('phoneNumber').value;
+            var payRate = document.getElementById('payRate').value;
+            var checkRate = document.getElementById('checkRate').value;
+            var active = document.getElementById('active').checked ? 1 : 0;
+            const data = {
+                "firstName": firstName,
+                "lastName": lastName,
+                "nickName": nickName,
+                "phoneNumber": phoneNumber,
+                "payRate": payRate,
+                "checkRate": checkRate,
+                "active": active
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
                         window.location.href = '/showEmployees';
-                     }
-                   }                    
-                };
-                xhttp.open('PUT', '/employees/{{EMPLOYEE_ID}}', true);
-                xhttp.setRequestHeader('Content-Type', 'application/json');
-                xhttp.send(JSON.stringify(data));              
-            }
-        </script>
-        
-    </body>
+                    }
+                }
+            };
+            xhttp.open('PUT', '/employees/{{EMPLOYEE_ID}}', true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify(data));
+        }
+    </script>
+
+</body>
+
 </html>
