@@ -93,7 +93,23 @@
             document.getElementById('currentDate').innerHTML = currentDate();
         }
 
+        function validateInput4Error() {
+            var firstName = document.querySelector('#firstName').value;
+            var lastName = document.querySelector('#lastName').value;
+            if (!firstName) {
+                return 'You need to provide a first name';
+            } else if (!lastName) {
+                return 'You need to provide a last name';
+            }
+            return null;
+        }
+
         function addEmployee() {
+            var error = validateInput4Error();
+            if (error) {
+                alert(error);
+                return;
+            }
             var firstName = document.getElementById('firstName').value;
             var lastName = document.getElementById('lastName').value;
             var nickName = document.getElementById('nickName').value;
