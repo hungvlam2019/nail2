@@ -27,6 +27,7 @@
                     <th>Phone</th>
                     <th>Pay Rate</th>
                     <th>Check Rate</th>
+                    <th>Active</th>
                 </tr>
             </table>
         </div>
@@ -80,6 +81,8 @@
                     col5.innerHTML = employee.payRate;
                     var col6 = row.insertCell(5);
                     col6.innerHTML = employee.checkRate;
+                    var col7 = row.insertCell(6);
+                    col7.innerHTML = !!employee.active;
                 });
                 console.log(table);
             }

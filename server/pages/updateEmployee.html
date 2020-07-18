@@ -62,7 +62,7 @@
                         </div>
                         <div class="verticalSpace">
                             <label for="active">Active</label>
-                            <input type="checkbox" id="active" class="checkbox" checked>
+                            <input type="checkbox" id="active" class="checkbox">
                         </div>
                     </div>
                 </div>
@@ -88,6 +88,7 @@
                         document.getElementById('phoneNumber').value = employeeInfo.phoneNumber;
                         document.getElementById('payRate').value = employeeInfo.payRate;
                         document.getElementById('checkRate').value = employeeInfo.checkRate;
+                        document.getElementById('active').checked = !!employeeInfo.active;
                     }
                 };
                 xhr.send(null);
@@ -104,13 +105,15 @@
                 var phoneNumber = document.getElementById('phoneNumber').value;
                 var payRate = document.getElementById('payRate').value;
                 var checkRate = document.getElementById('checkRate').value;
+                var active = document.getElementById('active').checked ? 1 : 0;
                 const data = {
                     "firstName": firstName,
                     "lastName": lastName,
                     "nickName": nickName,
                     "phoneNumber": phoneNumber,
                     "payRate": payRate,
-                    "checkRate": checkRate
+                    "checkRate": checkRate,
+                    "active": active
                 };
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {

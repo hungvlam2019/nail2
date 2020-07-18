@@ -35,7 +35,8 @@ module.exports = function(app) {
                 if (payRate === undefined || payRate === null) {
                     payRate = result.payRate;
                 }
-                var active = req.body.active || result.active;
+                var active = req.body.active;
+                console.log('update: ' + active);
                 employee.update(employeeId, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active, (result) => {
                     res.send(result);
                 });
