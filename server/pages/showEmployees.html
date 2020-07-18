@@ -21,7 +21,6 @@
         <div id="main">
             <table id="employeeTable">
                 <tr>
-                    <th>Index</th>
                     <th>Nick Name</th>
                     <th>Full Name</th>
                     <th>Phone</th>
@@ -44,6 +43,7 @@
 
 <script>
     var selectedEmployee = -1;
+    var employees;
 
     function init() {
         setCurrentDate();
@@ -62,7 +62,7 @@
                 //document.getElementById("Employees_Data").innerHTML = xhttp.responseText;
                 var tableContentBuffer = '';
                 //console.log('Result: ' + xhttp.responseText);
-                var employees = JSON.parse(xhttp.responseText);
+                employees = JSON.parse(xhttp.responseText);
                 //console.log(JSON.stringify(employees));
                 var table = document.getElementById('employeeTable');
                 var rowIndex = 1;
@@ -71,6 +71,7 @@
                     row.onclick = () => { selectedEmployee = row.cells[0].innerHTML };
                     var col1 = row.insertCell(0);
                     col1.innerHTML = employee.id;
+                    col1.style.display = 'none';
                     var col2 = row.insertCell(1);
                     col2.innerHTML = employee.nickName;
                     var col3 = row.insertCell(2);
@@ -84,7 +85,6 @@
                     var col7 = row.insertCell(6);
                     col7.innerHTML = !!employee.active;
                 });
-                console.log(table);
             }
         };
         xhttp.open('GET', '/employees', true);

@@ -78,3 +78,7 @@ input.checkbox {
 .verticalSpace {
   padding-bottom: 20px;
 }
+
+.disabled_item {
+  background-color: lightgrey;
+}
