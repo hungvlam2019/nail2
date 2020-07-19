@@ -1,22 +1,8 @@
-const mysql = require('mysql');
+module.exports = function(connection) {
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'admin',
-    database: 'nail'
-});
+    var module = {}
 
-connection.connect(function (err) {
-    if (err)
-        throw err;
-    console.log("Connect to the database successfully");
-});
-
-module.exports = {
-
-    insert: function (firstName, lastName, nickName, phoneNumber, checkRate = 0.6, payRate = 0.6, callback) {
+    module.insert = function (firstName, lastName, nickName, phoneNumber, checkRate = 0.6, payRate = 0.6, callback) {
         var sql = "INSERT INTO employee (firstName, lastName, nickName, phoneNumber, checkRate, payRate) VALUES (?, ?, ?, ?, ?, ?)";
         connection.query(sql, [firstName, lastName, nickName, phoneNumber, checkRate, payRate], function (err, result) {
             if (err)
@@ -26,7 +12,7 @@ module.exports = {
         });
     },
 
-    update: function (employeeId, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active, callback) {
+    module.update = function (employeeId, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active, callback) {
         var sql = 'UPDATE employee SET firstName = ?, lastName = ?, nickName = ?, phoneNumber = ?, checkRate = ?, payRate = ?, active = ? WHERE id = ?';
         connection.query(sql, [firstName, lastName, nickName, phoneNumber, checkRate, payRate, active, employeeId], function (err, result) {
             if (err)
@@ -37,7 +23,7 @@ module.exports = {
         });
     },
 
-    get: function (employeeId, callback) {
+    module.get = function (employeeId, callback) {
         var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee WHERE id = "' + employeeId + '" LIMIT 1';
         connection.query(sql, employeeId, function (err, result) {
             if (err) {
@@ -49,7 +35,7 @@ module.exports = {
         });
     },
 
-    getAll: function (callback) {
+    module.getAll = function (callback) {
         var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee ORDER BY nickName ASC';
         connection.query(sql, function (err, result) {
             if (!err) {
@@ -63,7 +49,7 @@ module.exports = {
         });
     },
 
-    delete: function (employeeId, callback) {
+    module.delete = function (employeeId, callback) {
         var sql = 'DELETE FROM employee WHERE id = "' + employeeId + '"';
         console.log('Delete: ' + sql);
         connection.query(sql, employeeId, function (err, result) {
@@ -74,4 +60,6 @@ module.exports = {
             }
         });
     }
+
+    return module;
 }

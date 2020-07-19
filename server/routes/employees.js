@@ -1,6 +1,6 @@
-module.exports = function(app) {
+module.exports = function(app, connection) {
 
-    const employee = require('../db/employee.js');
+    const employee = require('../db/employee.js')(connection);
 
     app.post('/employees', function(req, res) {
         var firstName = req.body.firstName;
