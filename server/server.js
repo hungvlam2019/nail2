@@ -33,6 +33,7 @@ connection.connect(function (err) {
 });
 
 const employees = require('./routes/employees')(app, connection);
+const services = require('./routes/services')(app, connection);
 
 app.get(['/', '/showEmployees'], function(req, res) {
     console.log('get showEmployees');
