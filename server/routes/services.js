@@ -1,3 +1,5 @@
+const url = require('url');
+
 module.exports = function(app, connection) {
 
     const service = require('../db/service.js')(connection);
@@ -45,10 +47,38 @@ module.exports = function(app, connection) {
     });
 
     app.get('/services', function(req, res) {
-        service.getAll(function(result) {
-            //console.log('Employees: ' + JSON.stringify(result));
-            res.send(result);
-        });
+        var query = url.parse(req.url, true).query;
+        var employeeId = query.employeeId;
+        var serviceDate = query.serviceDate;
+        var startDate = query.startDate;
+        var endDate = query.endDate;
+        if (employeeId) {
+            if (serviceDate) {
+                service.getServicesForEmployeeOn(employeeId, serviceDate, function(result) {
+                    res.send(result);
+                });
+            } else if (startDate && endDate) {
+                service.getServicesForEmployeeBetween(employeeId, startDate, endDate, function(result) {
+                    res.send(result);
+                });
+            } else {
+                service.getServicesForEmployeeThisYear(employeeId, function(result) {
+                    res.send(result);
+                })
+            }
+        } else if (serviceDate) {
+            service.getServicesOn(serviceDate, function(result) {
+                res.send(result);
+            })
+        } else if (startDate && endDate) {
+            service.getServicesBetween(startDate, endDate, function(result) {
+                res.send(result);
+            })
+        } else {
+            service.getAll(function(result) {
+                res.send(result);
+            })
+        }
     });
 
     app.get('/services/:id', function(req, res) {

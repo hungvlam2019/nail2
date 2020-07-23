@@ -47,7 +47,7 @@ module.exports = function(connection) {
         });
     },
 
-    module.getAll = function (callback) {
+    module.getAll = function(callback) {
         var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking FROM service ORDER BY serviceDate ASC';
         connection.query(sql, function (err, result) {
             if (!err) {
@@ -62,12 +62,85 @@ module.exports = function(connection) {
         });
     },
 
-    module.getTodayServiceForEmployee = function(employeeId, serviceDate, callback) {
+    module.getServicesForEmployeeOn = function(employeeId, serviceDate, callback) {
         var start = serviceDate + 'T00:00:00.000Z';
         var end = serviceDate + 'T23:59:59.000Z';
         var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function (err, result) {
+            if (!err) {
+                console.log(result);
+                callback(result);
+            }
+            else {
+                //TODO - need to pass error response to client
+                console.log(err);
+                throw err;
+            }
+        });
+    },
+
+    module.getServicesForEmployeeBetween = function(employeeId, startDate, endDate, callback) {
+        var start = startDate + 'T00:00:00.000Z';
+        var end = endDate + 'T23:59:59.000Z';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        console.log('sql: ' + sql);
+        connection.query(sql, function(err, result) {
+            if (!err) {
+                console.log(result);
+                callback(result);
+            }
+            else {
+                //TODO - need to pass error response to client
+                console.log(err);
+                throw err;
+            }
+        });
+    },
+
+    module.getServicesForEmployeeThisYear = function(employeeId, callback) {
+        var currentYear = new Date().getUTCFullYear();
+        var start = currentYear + '-01-01T00:00:00.000Z';
+        var end = currentYear + '-12-31T23:59:59.000Z';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        console.log('sql: ' + sql);
+        connection.query(sql, function(err, result) {
+            if (!err) {
+                console.log(result);
+                callback(result);
+            }
+            else {
+                //TODO - need to pass error response to client
+                console.log(err);
+                throw err;
+            }
+        });
+    },
+
+    module.getServicesOn = function(serviceDate, callback) {
+        var start = serviceDate + 'T00:00:00.000Z';
+        var end = serviceDate + 'T23:59:59.000Z';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        console.log('sql: ' + sql);
+        connection.query(sql, function(err, result) {
+            if (!err) {
+                console.log(result);
+                callback(result);
+            }
+            else {
+                //TODO - need to pass error response to client
+                console.log(err);
+                throw err;
+            }
+        });
+    },
+
+    module.getServicesBetween = function(startDate, endDate, callback) {
+        var start = startDate + 'T00:00:00.000Z';
+        var end = endDate + 'T23:59:59.000Z';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        console.log('sql: ' + sql);
+        connection.query(sql, function(err, result) {
             if (!err) {
                 console.log(result);
                 callback(result);
