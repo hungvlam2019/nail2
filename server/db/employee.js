@@ -23,7 +23,7 @@ module.exports = function(connection) {
         });
     },
 
-    module.get = function (employeeId, callback) {
+    module.get = function(employeeId, callback) {
         var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee WHERE id = "' + employeeId + '" LIMIT 1';
         connection.query(sql, employeeId, function (err, result) {
             if (err) {
@@ -35,7 +35,7 @@ module.exports = function(connection) {
         });
     },
 
-    module.getAll = function (callback) {
+    module.getAll = function(callback) {
         var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee ORDER BY nickName ASC';
         connection.query(sql, function (err, result) {
             if (!err) {
@@ -48,6 +48,23 @@ module.exports = function(connection) {
             }
         });
     },
+
+    module.getAllByStatus = function(active, callback) {
+        console.log('active: ' + typeof(active) + ' ' + active);
+        var activeValue = active === 'true' ? 1 : 0;
+        var sql = 'SELECT id, firstName, lastName, nickName, phoneNumber, checkRate, payRate, active FROM employee WHERE active = ' + activeValue + ' ORDER BY nickName ASC';
+        console.log('sql: ' + sql);
+        connection.query(sql, function (err, result) {
+            if (!err) {
+                callback(result);
+            }
+            else {
+                //TODO - need to pass error response to client
+                console.log(err);
+                throw err;
+            }
+        });
+    }
 
     module.delete = function (employeeId, callback) {
         var sql = 'DELETE FROM employee WHERE id = "' + employeeId + '"';

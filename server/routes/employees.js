@@ -1,3 +1,7 @@
+const url = require('url');
+//import isNullUndefinedOrEmpty from '../scripts/util';
+//const util = require('../scripts/util.js');
+
 module.exports = function(app, connection) {
 
     const employee = require('../db/employee.js')(connection);
@@ -44,11 +48,22 @@ module.exports = function(app, connection) {
         });
     });
 
+    function isNullUndefinedOrEmpty(value) {
+        return value === null || value === undefined || value.length === 0;
+    };
+
     app.get('/employees', function(req, res) {
-        employee.getAll(function(result) {
-            //console.log('Employees: ' + JSON.stringify(result));
-            res.send(result);
-        });
+        var query = url.parse(req.url, true).query;
+        var active = query.active;
+        if (isNullUndefinedOrEmpty(active)) {
+            employee.getAll(function(result) {
+                res.send(result);
+            });
+        } else {
+            employee.getAllByStatus(active, function(result) {
+                res.send(result);
+            });
+        }
     });
 
     app.get('/employees/:id', function(req, res) {

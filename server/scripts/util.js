@@ -9,3 +9,9 @@ function dayOfWeek(day) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return daysOfWeek[day];
 }
+
+function isNullUndefinedOrEmpty(value) {
+    return value === null || value === undefined || value.length() === 0;
+}
+
+module.exports = isNullUndefinedOrEmpty;
