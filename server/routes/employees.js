@@ -64,7 +64,7 @@ module.exports = function(app, connection) {
                 res.send(result);
             });
         }
-    });
+    }); 
 
     app.get('/employees/:id', function(req, res) {
         var employeeId = parseInt(req.params.id);

@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <script src="/scripts/fieldFormat.js"></script>
+    <script src="/scripts/util.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
+</head>
+
+<body onload="init()">
+    <div id="container">
+        <header>
+            <h2 class="logo">Serenity Nail Spa</h2>
+            <p>
+            <div>Employees</div>
+            <div id="currentDate" class="header-right"></div>
+            </p>
+        </header>
+
+        <div id="main">
+
+        </div>
+
+        <footer>
+            <button id="home" onclick="goHome()">Home</button>
+            <button id="addEmployee" onclick="addEmployee()">Add Employee</button>
+            <button id="updateEmployee" onclick="updateEmployee()">Update Employee</button>
+            <button id="deleteEmployee" onclick="deleteEmployee()">Delete Employee</button>
+        </footer>
+    </div>
+
+    <script>
+        var employees;
+
+        function init() {
+            setCurrentDate();
+            getActiveEmployees();
+        }
+
+        function setCurrentDate() {
+            document.getElementById('currentDate').innerHTML = currentDate();
+        }
+
+        function getActiveEmployees() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    let numEmployeesPerRow = 6;
+                    let currentCount = 0;
+                    var content = '';
+                    employees = JSON.parse(xhttp.responseText);
+                    employees.forEach(employee => {
+                        if (currentCount % numEmployeesPerRow === 0) {
+                            if (currentCount > 0) {
+                                content += '</div>';
+                            }
+                            content += '<div class="row">';
+                        }
+                        content += '<div class="column">';
+                        content += '<div class="card">';
+                        content += '<img src="/images/employee.jpg" alt="' + employee.nickName + '">';
+                        content += '<h3>' + employee.nickName + '</h3>';
+                        content += '<p>' + fullName2Label(employee.firstName, employee.lastName) + '</p>';
+                        content += '</div>';
+                        content += '</div>';
+                        currentCount++;
+                    });
+                    while (currentCount % numEmployeesPerRow !== 0) {
+                        content += '<div class="column"></div>';
+                        currentCount++;
+                    }
+                    if (content) {
+                        content += '</div>';
+                    }
+                    console.log(content);
+                    document.querySelector('#main').innerHTML = content;
+                }
+            };
+            xhttp.open('GET', '/employees?active=true', true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>

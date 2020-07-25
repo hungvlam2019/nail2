@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use('/pages', express.static('pages', {root: __dirname}));
 app.use('/scripts', express.static(path.join(__dirname, 'scripts')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const port = 8000;
 app.listen(port, function() {
@@ -35,9 +36,12 @@ connection.connect(function (err) {
 const employees = require('./routes/employees')(app, connection);
 const services = require('./routes/services')(app, connection);
 
-app.get(['/', '/showEmployees'], function(req, res) {
-    console.log('get showEmployees');
+app.get('/showEmployees', function(req, res) {
     res.sendFile('pages/showEmployees.html', {root: __dirname});
+});
+
+app.get(['/', '/home'], function(req, res) {
+    res.sendFile('pages/showActiveEmployees.html', {root: __dirname});
 });
 
 app.get('/addEmployee', function(req, res) {

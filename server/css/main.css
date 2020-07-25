@@ -82,3 +82,16 @@ input.checkbox {
 .disabled_item {
   background-color: lightgrey;
 }
+
+.card {
+  box-shadow: 10px 5px 10px red;
+  max-width: 200px;
+  max-height: 250px;
+  margin: auto;
+  text-align: center;
+}
+
+.card img {
+   height: 120px;
+   width: 120px;
+}

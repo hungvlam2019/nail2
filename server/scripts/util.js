@@ -13,5 +13,3 @@ function dayOfWeek(day) {
 function isNullUndefinedOrEmpty(value) {
     return value === null || value === undefined || value.length() === 0;
 }
-
-module.exports = isNullUndefinedOrEmpty;
