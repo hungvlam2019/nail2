@@ -96,8 +96,6 @@
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                     var employeeInfo = JSON.parse(xhr.responseText);
-                    console.log(employeeInfo);
-                    console.log('data: ' + JSON.stringify(employeeInfo));
                     document.getElementById('firstName').value = employeeInfo.firstName;
                     document.getElementById('lastName').value = employeeInfo.lastName;
                     document.getElementById('nickName').value = employeeInfo.nickName;

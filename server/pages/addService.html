@@ -1,0 +1,197 @@
+<html>
+<header>
+    <base href="/" >  <!-- Need this to resolve CSS issue with mimeType error -->
+    <script src="/scripts/fieldFormat.js"></script>
+    <script src="/scripts/util.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/footer.css">
+</header>
+
+<body onload="init()">
+    <div id="container">
+        <header>
+            <h2 class="logo">Serenity Nail Spa</h2>
+            <p>
+            <div>Add New Employee</div>
+            <div id="currentDate" class="header-right"></div>
+            </p>
+        </header>
+
+        <div id="main">
+            <h2>Service For: <span id="employeeName"></span></h2>
+            <div class="row">
+                <div class="column">
+                    <div class="verticalSpace">
+                        <label for="charge">Charge:</label>
+                        <input type="text" id="charge">
+                    </div>
+                    <div class="verticalSpace">
+                        <label for="tip">Tip:</label>
+                        <input type="text" id="tip">
+                    </div>
+                    <div id="paymentType" class="verticalSpace">
+                        <button id="paymentType_cc" onclick="selectPaymentType('CC')"
+                            class="selected">Credit/Debit</button>
+                        <button id="paymentType_cash" onclick="selectPaymentType('CASH')">Cash</button>
+                        <br />
+                        <button id="paymentType_gc" onclick="selectPaymentType('GC')">Giftcard</button>
+                        <button id="paymentType_check" onclick="selectPaymentType('CHECK')">Check</button>
+                    </div>
+                    <div id="paymentTracking_section" class="verticalSpace">
+                        <label for="paymentTracking">Tracking:</label>
+                        <input type="text" id="paymentTracking">
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="numpad">
+                        <button onclick="numpadKeyPress(1)">1</button>
+                        <button onclick="numpadKeyPress(2)">2</button>
+                        <button onclick="numpadKeyPress(3)">3</button>
+                        <button onclick="numpadKeyPress(4)">4</button>
+                        <button onclick="numpadKeyPress(5)">5</button>
+                        <button onclick="numpadKeyPress(6)">6</button>
+                        <button onclick="numpadKeyPress(7)">7</button>
+                        <button onclick="numpadKeyPress(8)">8</button>
+                        <button onclick="numpadKeyPress(9)">9</button>
+                        <button onclick="numpadKeyPress(-1)">CLEAR</button>
+                        <button onclick="numpadKeyPress(0)">0</button>
+                        <button onclick="numpadKeyPress(-2)">ENTER</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <button id="Add" onclick="addService()">Add</button>
+            <button id="home" onclick="showActiveEmployees()">Cancel</button>
+        </footer>
+    </div>
+
+    <script>
+        var paymentType = selectPaymentType('CC');
+        var currentField = document.querySelector('#charge');
+        var currentDateTime = currentDateTime();
+        var employee;
+
+        function init() {
+            document.getElementById('currentDate').innerHTML = currentDate();
+            loadEmployee();
+            currentField.focus();
+        }
+
+        function loadEmployee() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/employees/{{EMPLOYEE_ID}}');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    employee = JSON.parse(xhr.responseText);
+                    document.querySelector('#employeeName').innerHTML = employee.nickName;
+                }
+            };
+            xhr.send(null);
+        }
+
+        function numpadKeyPress(value) {
+            if (!currentField && currentField.type !== 'input') {
+                return;
+                alert('not');
+            }
+            var num = Number(value);
+            if (num === -1) {
+                currentField.value = '';
+            } else if (num === -2) {
+                if (currentField.id === 'charge') {
+                    currentField = document.querySelector('#tip');
+                } else if (currentField.id === 'tip') {
+                    currentField = document.querySelector('#paymentType_cc');
+                    selectPaymentType('CC');
+                }
+                currentField.focus();
+            } else {
+                currentField.value = currentField.value += num;
+            }
+        }
+
+        function selectPaymentType(value) {
+            document.querySelector('#paymentType_CC').classList.remove('selected');
+            document.querySelector('#paymentType_CASH').classList.remove('selected');
+            document.querySelector('#paymentType_GC').classList.remove('selected');
+            document.querySelector('#paymentType_CHECK').classList.remove('selected');
+            if (value === 'CC') {
+                paymentType = 'CC';
+                document.querySelector('#paymentType_CC').className = 'selected';
+            } else if (value === 'CASH') {
+                paymentType = 'CASH';
+                document.querySelector('#paymentType_CASH').className = 'selected';
+            } else if (value === 'CHECK') {
+                paymentType = 'CHECK';
+                document.querySelector('#paymentType_CHECK').className = 'selected';
+            } else {
+                paymentType = 'GC';
+                document.querySelector('#paymentType_GC').className = 'selected';
+            }
+
+            if (paymentType === 'CASH') {
+                document.querySelector('#paymentTracking_section').style.display = 'none';
+            } else {
+                document.querySelector('#paymentTracking_section').style.display = 'block';
+            }
+
+            if (!document.querySelector('#charge').value) {
+                currentField = document.querySelector('#charge');
+            } else {
+                currentField = document.querySelector('#paymentTracking');
+            }
+            currentField.focus();
+        }
+
+        function validateInput4Error() {
+            var charge = document.querySelector('#charge').value;
+            if (!charge) {
+                return 'You need to enter the amount of service';
+            } else if (!paymentType) {
+                return 'You need to enter a payment type for the service';
+            }
+            return null;
+        }
+
+        function addService() {
+            var error = validateInput4Error();
+            if (error) {
+                alert(error);
+                return;
+            }
+            var charge = document.querySelector('#charge').value;
+            var tip = document.querySelector('#tip').value;
+            var paymentTracking = document.querySelector('#paymentTracking').value;
+
+            const data = {
+                "employeeId": employee.id,
+                "serviceDate" : currentDateTime,
+                "charge" : charge,
+                "tip" : tip,
+                "paymentType" : paymentType,
+                "paymentTracking" : paymentTracking
+            };
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == XMLHttpRequest.DONE) {
+                    if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
+                        window.location.href = '/home';
+                    }
+                }
+            };
+            xhttp.open('POST', '/services', true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send(JSON.stringify(data));
+        }
+
+        function showActiveEmployees() {
+            window.location.href = '/home';
+        }
+    </script>
+
+</body>
+
+</html>

@@ -95,3 +95,70 @@ input.checkbox {
    height: 120px;
    width: 120px;
 }
+
+#numpad button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 10px;
+  border-radius: 12px;
+  height: 60px;
+  width: 100%;
+}
+
+#numpad {
+  width: 100%;
+  border: 5px solid blue;
+  display: inline-block;
+}
+
+#numpad button {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: calc(33% - 10px);
+  height: 100px;
+  margin: 5px;
+  background: lightskyblue;
+  color: blue;
+  float: left;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 12px;
+}
+
+#numpad button:hover {
+  background-color: yellow;
+  color: white;
+}
+
+#numpad block[v2] {
+  height: 210px;
+}
+
+#numpad block[h2] {
+  width: calc(50% - 10px);
+}
+
+#paymentType button {
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 10px 10px;
+  border-radius: 12px;
+  width: 200px;
+}
+
+#paymentType button.selected {
+  background-color: yellow;
+  color: black;
+}

@@ -50,8 +50,21 @@ app.get('/addEmployee', function(req, res) {
 
 app.get('/updateEmployee/:id', function(req,res) {
     var employeeId = parseInt(req.params.id);
-    console.log('update employee id: ' + employeeId);
     var filePath = path.join(__dirname, 'pages/updateEmployee.html');
+    fs.readFile(filePath, function(err, data) {
+        if (err) {
+            throw err;
+        }
+
+        var content = data.toString();
+        content = content.replace(/{{EMPLOYEE_ID}}/g, employeeId);
+        res.send(content);
+    });
+});
+
+app.get('/addService/:employeeId', function(req, res) {
+    var employeeId = parseInt(req.params.employeeId);
+    var filePath = path.join(__dirname, 'pages/addService.html');
     fs.readFile(filePath, function(err, data) {
         if (err) {
             throw err;

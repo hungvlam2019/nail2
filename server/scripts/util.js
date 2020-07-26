@@ -5,6 +5,11 @@ function currentDate() {
     return day + ', ' + date;
 }
 
+function currentDateTime() {
+    var now = new Date();
+    return now.getFullYear() + '/' + (now.getMonth()+1) + '/' + now.getDate() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+}
+
 function dayOfWeek(day) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return daysOfWeek[day];

@@ -58,7 +58,7 @@
                             content += '<div class="row">';
                         }
                         content += '<div class="column">';
-                        content += '<div class="card">';
+                        content += '<div class="card" onclick="addService(' + employee.id + ')">';
                         content += '<img src="/images/employee.jpg" alt="' + employee.nickName + '">';
                         content += '<h3>' + employee.nickName + '</h3>';
                         content += '<p>' + fullName2Label(employee.firstName, employee.lastName) + '</p>';
@@ -80,6 +80,10 @@
             xhttp.open('GET', '/employees?active=true', true);
             xhttp.setRequestHeader('Content-Type', 'application/json');
             xhttp.send();
+        }
+
+        function addService(employeeId) {
+            window.location.href = '/addService/' + employeeId;
         }
     </script>
 </body>
