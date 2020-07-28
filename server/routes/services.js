@@ -9,13 +9,12 @@ module.exports = function(app, connection) {
         var serviceDate = req.body.serviceDate;
         var charge = req.body.charge;
         var tip = req.body.tip;
-        var paymentAmount = req.body.paymentAmount;
         var paymentType = req.body.paymentType;
         var paymentTracking = req.body.paymentTracking || -1;
-        console.log(`Insert service: ${employeeId} ${serviceDate} ${charge} ${tip} ${paymentAmount} ${paymentType} ${paymentTracking}`);
+        //console.log(`Insert service: ${employeeId} ${serviceDate} ${charge} ${tip} ${paymentType} ${paymentTracking}`);
     
         //TODO : handle error case in res.send(result)
-        service.insert(employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking, function(result) {
+        service.insert(employeeId, serviceDate, charge, tip, paymentType, paymentTracking, function(result) {
             res.send(result);
         });
     });
@@ -29,10 +28,9 @@ module.exports = function(app, connection) {
                 var serviceDate = req.body.serviceDate || result.serviceDate;
                 var charge = req.body.charge || result.charge;
                 var tip = req.body.tip || result.tip;
-                var paymentAmount = req.body.paymentAmount || result.paymentAmount;
                 var paymentType = req.body.paymentType || result.paymentType;
                 var paymentTracking = req.body.paymentTracking || result.paymentTracking;
-                service.update(serviceId, employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking, (result) => {
+                service.update(serviceId, employeeId, serviceDate, charge, tip, paymentType, paymentTracking, (result) => {
                     res.send(result);
                 });
             }
@@ -84,7 +82,6 @@ module.exports = function(app, connection) {
     app.get('/services/:id', function(req, res) {
         var serviceId = parseInt(req.params.id);
         service.get(serviceId, function(result) {
-            //console.log('Employees: ' + JSON.stringify(result));
             res.send(result);
         });
     });

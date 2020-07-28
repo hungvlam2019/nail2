@@ -2,10 +2,9 @@ module.exports = function(connection) {
 
     var module = {}
 
-    module.insert = function (employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking = -1, callback) {
-        var sql = "INSERT INTO service (employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        //var utcDate = new Date(new Date(serviceDate).toUTCString());
-        connection.query(sql, [employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking], function (err, result) {
+    module.insert = function (employeeId, serviceDate, charge, tip, paymentType, paymentTracking = -1, callback) {
+        var sql = "INSERT INTO service (employeeId, serviceDate, charge, tip, paymentType, paymentTracking) VALUES (?, ?, ?, ?, ?, ?)";
+        connection.query(sql, [employeeId, serviceDate, charge, tip, paymentType, paymentTracking], function (err, result) {
             if (err)
                 throw err;
             if (callback !== undefined)
@@ -13,9 +12,9 @@ module.exports = function(connection) {
         });
     },
 
-    module.update = function (serviceId, employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking = -1, callback) {
-        var sql = 'UPDATE service SET employeeId = ?, serviceDate = ?, charge = ?, tip = ?, paymentAmount = ?, paymentType = ?, paymentTracking = ? WHERE id = ?';
-        connection.query(sql, [employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking, serviceId], function (err, result) {
+    module.update = function (serviceId, employeeId, serviceDate, charge, tip, paymentType, paymentTracking = -1, callback) {
+        var sql = 'UPDATE service SET employeeId = ?, serviceDate = ?, charge = ?, tip = ?, paymentType = ?, paymentTracking = ? WHERE id = ?';
+        connection.query(sql, [employeeId, serviceDate, charge, tip, paymentType, paymentTracking, serviceId], function (err, result) {
             if (err)
                 throw err;
             if (callback !== undefined) {
@@ -36,7 +35,7 @@ module.exports = function(connection) {
     }
 
     module.get = function (serviceId, callback) {
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking FROM service WHERE id = "' + serviceId + '" LIMIT 1';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentType, paymentTracking FROM service WHERE id = "' + serviceId + '" LIMIT 1';
         connection.query(sql, serviceId, function (err, result) {
             if (err) {
                 throw err;
@@ -48,7 +47,7 @@ module.exports = function(connection) {
     },
 
     module.getAll = function(callback) {
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymentType, paymentTracking FROM service ORDER BY serviceDate ASC';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentType, paymentTracking FROM service ORDER BY serviceDate ASC';
         connection.query(sql, function (err, result) {
             if (!err) {
                 console.log(result);
@@ -65,7 +64,7 @@ module.exports = function(connection) {
     module.getServicesForEmployeeOn = function(employeeId, serviceDate, callback) {
         var start = serviceDate + 'T00:00:00.000Z';
         var end = serviceDate + 'T23:59:59.000Z';
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function (err, result) {
             if (!err) {
@@ -83,7 +82,7 @@ module.exports = function(connection) {
     module.getServicesForEmployeeBetween = function(employeeId, startDate, endDate, callback) {
         var start = startDate + 'T00:00:00.000Z';
         var end = endDate + 'T23:59:59.000Z';
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function(err, result) {
             if (!err) {
@@ -102,7 +101,7 @@ module.exports = function(connection) {
         var currentYear = new Date().getUTCFullYear();
         var start = currentYear + '-01-01T00:00:00.000Z';
         var end = currentYear + '-12-31T23:59:59.000Z';
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function(err, result) {
             if (!err) {
@@ -120,7 +119,7 @@ module.exports = function(connection) {
     module.getServicesOn = function(serviceDate, callback) {
         var start = serviceDate + 'T00:00:00.000Z';
         var end = serviceDate + 'T23:59:59.000Z';
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function(err, result) {
             if (!err) {
@@ -138,7 +137,7 @@ module.exports = function(connection) {
     module.getServicesBetween = function(startDate, endDate, callback) {
         var start = startDate + 'T00:00:00.000Z';
         var end = endDate + 'T23:59:59.000Z';
-        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymentAmount, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
+        var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
         console.log('sql: ' + sql);
         connection.query(sql, function(err, result) {
             if (!err) {
