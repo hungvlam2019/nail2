@@ -1,5 +1,9 @@
 module.exports = function(connection) {
 
+    function tripTimeFromDateTime(value) {
+        return value.split(' ')[0];
+    }
+    
     var module = {}
 
     module.insert = function (employeeId, serviceDate, charge, tip, paymentType, paymentTracking = -1, callback) {
@@ -62,10 +66,11 @@ module.exports = function(connection) {
     },
 
     module.getServicesForEmployeeOn = function(employeeId, serviceDate, callback) {
+        serviceDate = tripTimeFromDateTime(serviceDate);
         var start = serviceDate + 'T00:00:00.000Z';
         var end = serviceDate + 'T23:59:59.000Z';
         var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
-        console.log('sql: ' + sql);
+        console.log('getServicesForEmployeeOn.sql: ' + sql);
         connection.query(sql, function (err, result) {
             if (!err) {
                 console.log(result);
@@ -80,6 +85,8 @@ module.exports = function(connection) {
     },
 
     module.getServicesForEmployeeBetween = function(employeeId, startDate, endDate, callback) {
+        startDate = tripTimeFromDateTime(startDate);
+        endDate = tripTimeFromDateTime(endDate);
         var start = startDate + 'T00:00:00.000Z';
         var end = endDate + 'T23:59:59.000Z';
         var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE employeeId = ' + employeeId + ' AND serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';
@@ -135,6 +142,8 @@ module.exports = function(connection) {
     },
 
     module.getServicesBetween = function(startDate, endDate, callback) {
+        startDate = tripTimeFromDateTime(startDate);
+        endDate = tripTimeFromDateTime(endDate);
         var start = startDate + 'T00:00:00.000Z';
         var end = endDate + 'T23:59:59.000Z';
         var sql = 'SELECT id, employeeId, serviceDate, charge, tip, paymenttype, paymentTracking FROM service WHERE serviceDate BETWEEN \'' + start + '\' AND \'' + end + '\'';

@@ -1,6 +1,6 @@
 <html>
 <header>
-    <base href="/" >  <!-- Need this to resolve CSS issue with mimeType error -->
+    <base href="/"> <!-- Need this to resolve CSS issue with mimeType error -->
     <script src="/scripts/fieldFormat.js"></script>
     <script src="/scripts/util.js"></script>
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -168,11 +168,11 @@
 
             const data = {
                 "employeeId": employee.id,
-                "serviceDate" : currentDateTime,
-                "charge" : charge,
-                "tip" : tip,
-                "paymentType" : paymentType,
-                "paymentTracking" : paymentTracking
+                "serviceDate": currentDateTime,
+                "charge": charge,
+                "tip": tip,
+                "paymentType": paymentType,
+                "paymentTracking": paymentTracking
             };
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {

@@ -63,6 +63,7 @@ app.get('/updateEmployee/:id', function(req,res) {
 });
 
 app.get('/addService/:employeeId', function(req, res) {
+    console.log('addService');
     var employeeId = parseInt(req.params.employeeId);
     var filePath = path.join(__dirname, 'pages/addService.html');
     fs.readFile(filePath, function(err, data) {

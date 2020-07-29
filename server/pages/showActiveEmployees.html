@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/header.css">
     <link rel="stylesheet" type="text/css" href="css/footer.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body onload="init()">
@@ -30,12 +31,43 @@
         </footer>
     </div>
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Modal Header</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="column">Name: </div>
+                    <div class="column" id="modal_fullName"></div>
+                </div>
+                <div class="row">
+                    <div class="column">Amount: </div>
+                    <div class="column" id="modal_chargeTotal"></div>
+                </div>   
+                <div class="row">
+                    <div class="column">Tip: </div>
+                    <div class="column" id="modal_tipTotal"></div>
+                </div>                              
+            </div>
+            <div>
+                <h3><button id="closeModal" onclick="closeModal()">Close</button></h3>
+            </div>
+        </div>
+    </div>    
+
     <script>
-        var employees;
+        var employees = [];
+        var currentDateTime;
+        var modal = document.getElementById("myModal");
 
         function init() {
             setCurrentDate();
             getActiveEmployees();
+            currentDateTime = currentDateTime();
         }
 
         function setCurrentDate() {
@@ -44,13 +76,14 @@
 
         function getActiveEmployees() {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
+            xhttp.onreadystatechange = function() {
                 if (this.readyState === 4 && this.status === 200) {
                     let numEmployeesPerRow = 6;
                     let currentCount = 0;
                     var content = '';
-                    employees = JSON.parse(xhttp.responseText);
-                    employees.forEach(employee => {
+                    var employeeArray = JSON.parse(xhttp.responseText);
+                    employeeArray.forEach(employee => {
+                        employees.push(employee);
                         if (currentCount % numEmployeesPerRow === 0) {
                             if (currentCount > 0) {
                                 content += '</div>';
@@ -58,10 +91,11 @@
                             content += '<div class="row">';
                         }
                         content += '<div class="column">';
-                        content += '<div class="card" onclick="addService(' + employee.id + ')">';
-                        content += '<img src="/images/employee.jpg" alt="' + employee.nickName + '">';
+                        content += '<div class="card">';
+                        content += '<img src="/images/employee.jpg" alt="' + employee.nickName + '" onclick="addService(' + employee.id + ')">';
                         content += '<h3>' + employee.nickName + '</h3>';
-                        content += '<p>' + fullName2Label(employee.firstName, employee.lastName) + '</p>';
+                        content += '<button class="small" onclick="showEmployeeTodayTotal(' + employee.id + ')">Today Total</button>';
+                        //content += '<p>' + fullName2Label(employee.firstName, employee.lastName) + '</p>';
                         content += '</div>';
                         content += '</div>';
                         currentCount++;
@@ -84,6 +118,54 @@
 
         function addService(employeeId) {
             window.location.href = '/addService/' + employeeId;
+        }
+
+        function showEmployeeTodayTotal(employeeId) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState === 4 && this.status === 200) {
+                    var services = JSON.parse(xhttp.responseText);
+                    let employee = getEmployeeInfo(employeeId);
+                    let [chargeTotal, tipTotal] = computeTotal(services);
+                    document.querySelector('#modal_fullName').innerHTML = fullName2Label(employee.firstName, employee.lastName);
+                    document.querySelector('#modal_chargeTotal').innerHTML = chargeTotal;
+                    document.querySelector('#modal_tipTotal').innerHTML = tipTotal;
+                    openModal();
+                }
+            };
+            xhttp.open('GET', '/services?employeeId=' + employeeId + '&serviceDate=' + currentDateTime, true);
+            xhttp.setRequestHeader('Content-Type', 'application/json');
+            xhttp.send();
+        }
+
+
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }      
+        
+        function getEmployeeInfo(employeeId) {
+            for (let i=0; i<employees.length; i++) {
+                var employee = employees[i];
+                if (employee.id === employeeId) {
+                    return employee;
+                }      
+            }
+        }
+
+        function computeTotal(services) {
+            let chargeTotal = 0;
+            let tipTotal = 0;
+            if (services) {
+                for (service of services) {
+                    chargeTotal += service.charge;
+                    tipTotal += service.tip;
+                }
+            }
+            return [chargeTotal, tipTotal];
         }
     </script>
 </body>

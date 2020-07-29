@@ -18,3 +18,7 @@ function dayOfWeek(day) {
 function isNullUndefinedOrEmpty(value) {
     return value === null || value === undefined || value.length() === 0;
 }
+
+function tripTimeFromDateTime(value) {
+    return value.split(' ')[0];
+}
