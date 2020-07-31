@@ -8,7 +8,7 @@ module.exports = function(app, connection) {
         var employeeId = req.body.employeeId;
         var serviceDate = req.body.serviceDate;
         var charge = req.body.charge;
-        var tip = req.body.tip;
+        var tip = req.body.tip || 0;
         var paymentType = req.body.paymentType;
         var paymentTracking = req.body.paymentTracking || -1;
         //console.log(`Insert service: ${employeeId} ${serviceDate} ${charge} ${tip} ${paymentType} ${paymentTracking}`);

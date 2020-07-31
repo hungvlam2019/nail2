@@ -24,15 +24,14 @@
                 <div class="column">
                     <div class="verticalSpace">
                         <label for="charge">Charge:</label>
-                        <input type="text" id="charge">
+                        <input type="text" id="charge" onfocus="currentField = document.querySelector('#charge')">
                     </div>
                     <div class="verticalSpace">
                         <label for="tip">Tip:</label>
-                        <input type="text" id="tip">
+                        <input type="text" id="tip" onfocus="currentField = document.querySelector('#tip')">
                     </div>
                     <div id="paymentType" class="verticalSpace">
-                        <button id="paymentType_cc" onclick="selectPaymentType('CC')"
-                            class="selected">Credit/Debit</button>
+                        <button id="paymentType_cc" onclick="selectPaymentType('CC')" class="selected">Credit/Debit</button>
                         <button id="paymentType_cash" onclick="selectPaymentType('CASH')">Cash</button>
                         <br />
                         <button id="paymentType_gc" onclick="selectPaymentType('GC')">Giftcard</button>
@@ -40,7 +39,7 @@
                     </div>
                     <div id="paymentTracking_section" class="verticalSpace">
                         <label for="paymentTracking">Tracking:</label>
-                        <input type="text" id="paymentTracking">
+                        <input type="text" id="paymentTracking" onfocus="currentField = document.querySelector('#paymentTracking')">
                     </div>
                 </div>
                 <div class="column">
@@ -68,12 +67,13 @@
     </div>
 
     <script>
-        var paymentType = selectPaymentType('CC');
+        var paymentType;
         var currentField = document.querySelector('#charge');
         var currentDateTime = currentDateTime();
         var employee;
 
         function init() {
+            selectPaymentType('CC');
             document.getElementById('currentDate').innerHTML = currentDate();
             loadEmployee();
             currentField.focus();
