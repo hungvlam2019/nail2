@@ -33,8 +33,8 @@ connection.connect(function (err) {
     console.log("Connect to the database successfully");
 });
 
-const employees = require('./routes/employees')(app, connection);
-const services = require('./routes/services')(app, connection);
+const employees = require('./scripts/employeeRestApi')(app, connection);
+const services = require('./scripts/serviceRestApi')(app, connection);
 
 app.get('/showEmployees', function(req, res) {
     res.sendFile('pages/showEmployees.html', {root: __dirname});

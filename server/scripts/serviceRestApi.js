@@ -2,7 +2,7 @@ const url = require('url');
 
 module.exports = function(app, connection) {
 
-    const service = require('../db/service.js')(connection);
+    const service = require('./serviceDbManager')(connection);
 
     app.post('/services', function(req, res) {
         var employeeId = req.body.employeeId;

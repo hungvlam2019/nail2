@@ -1,10 +1,8 @@
 const url = require('url');
-//import isNullUndefinedOrEmpty from '../scripts/util';
-//const util = require('../scripts/util.js');
 
 module.exports = function(app, connection) {
 
-    const employee = require('../db/employee.js')(connection);
+    const employee = require('./employeeDbManager')(connection);
 
     app.post('/employees', function(req, res) {
         var firstName = req.body.firstName;
